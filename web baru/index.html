@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semangat & Selamat Ulang Tahun, Temanku!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="bg-music" src="lagu.mp3" loop></audio>
+
+    <div id="leaves-container"></div>
+
+    <div id="page1" class="page active">
+        <div class="gift-container" onclick="openGift()">
+            <div class="gift-box">🎁</div>
+            <p class="tap-text">Ketuk kado untuk membuka kejutan ✨</p>
+        </div>
+    </div>
+
+    <div id="page2" class="page">
+        <div class="game-container">
+            <span class="game-level">Level 1 / 2</span>
+            <h2 class="game-title">Eits, Tebak Dulu! 🧐</h2>
+            <p class="game-instruction">Hari ini ada yang spesial nih. Coba tebak, hari ini hari apa?</p>
+            <div class="game-options">
+                <div class="game-card" onclick="checkLevel1(false, this)">
+                    <span>📅</span><br>Hari Biasa
+                </div>
+                <div class="game-card" onclick="checkLevel1(true, this)">
+                    <span>🎂</span><br>Ultahmu!
+                </div>
+                <div class="game-card" onclick="checkLevel1(false, this)">
+                    <span>💸</span><br>Hari Libur
+                </div>
+            </div>
+            <p id="game-feedback-1" class="game-feedback"></p>
+            <button id="next-to-level2" class="next-btn hidden-element" onclick="nextPage(3)">Lanjut Level 2 ➡️</button>
+        </div>
+    </div>
+
+    <div id="page3" class="page">
+        <div class="game-container">
+            <span class="game-level">Level 2 / 2</span>
+            <h2 class="game-title">Satu Tebakan Lagi! 🎲</h2>
+            <p class="game-instruction">Pilih satu angka keberuntungan yang menyimpan kunci rahasia ucapan utamamu hari ini:</p>
+            <div class="game-options flex-wrap">
+                <div class="game-card small-card" onclick="checkLevel2(false, this)">7</div>
+                <div class="game-card small-card" onclick="checkLevel2(true, this)">9</div>
+                <div class="game-card small-card" onclick="checkLevel2(false, this)">3</div>
+                <div class="game-card small-card" onclick="checkLevel2(false, this)">5</div>
+            </div>
+            <p id="game-feedback-2" class="game-feedback"></p>
+            <button id="next-to-main" class="next-btn hidden-element" onclick="nextPage(4)">Buka Ucapan Utama 🎉</button>
+        </div>
+    </div>
+
+    <div id="page4" class="page">
+        <p class="sub-title">Secangkir Doa di Hari Spesial</p>
+        <h1 class="main-title">Selamat Ulang Tahun, <br>DIBAA</h1>
+        <p class="intro-text">Makasih ya udah bertahan sejauh ini melewati dua game seru tadi. Ketuk tombol-tombol di bawah untuk membaca pesan penyemangat dariku khusus buat kamu!</p>
+        
+        <div class="surprise-grid">
+            <div class="surprise-item" onclick="showPopup('Pesan Semangat', 'Hai! Aku cuma mau bilang kalau kamu itu hebat banget. Aku tahu akhir-akhir ini mungkin ada banyak hal berat yang lagi kamu laluin, entah urusan masa depan, tugas, atau hal-hal yang gak bisa kamu ceritain. Tapi lihat dirimu sekarang, kamu tetap berdiri kuat! Jangan pernah ragu sama kemampuanmu sendiri ya. Jalani pelan-pelan, kamu pasti bisa melewati semuanya!')">
+                <div class="surprise-icon">🔥</div>
+                <span>Semangat</span>
+            </div>
+            <div class="surprise-item" onclick="showPopup('Doa & Harapan', 'Di hari ulang tahunmu ini, doa terbaikku selalu menyertaimu. Semoga segala lelahmu digantikan jadi berkah, dilancarkan rezekinya, dan didekatkan ke impian-impian besar yang sering kamu semogakan. Jaga kesehatanmu selalu, jangan keseringan begadang, dan semoga kebahagiaan selalu melukis senyum di wajahmu setiap harinya!')">
+                <div class="surprise-icon">🍀</div>
+                <span>Doa Baik</span>
+            </div>
+            <div class="surprise-item" onclick="showPopup('Pengingat Terbaik', 'Ingat ya, hidup ini bukan perlombaan balapan sama orang lain. Kamu gak perlu merasa tertinggal cuma karena pencapaian orang berbeda. Setiap orang punya garis start dan rute indahnya masing-masing. Fokus sama langkah kecilmu hari ini, hargai setiap prosesmu, dan jangan lupa buat bahagia. Kamu itu berharga banget dan kamu sudah melangkah sejauh ini dengan sangat baik!')">
+                <div class="surprise-icon">💡</div>
+                <span>Pengingat</span>
+            </div>
+        </div>
+        
+        <br>
+        <p class="footer-note">Dibuat dengan penuh ketulusan untukmu ✨</p>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <div class="close-lightbox" onclick="closeLightbox()">&times;</div>
+        <div class="lightbox-content-wrapper">
+            <h2 id="popup-title"></h2>
+            <p id="popup-text" class="typing-target"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
