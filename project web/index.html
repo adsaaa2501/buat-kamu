@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, My Everything</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="bg-music" src="lagu.mp3" loop></audio>
+
+    <section class="page active" id="page1">
+        <div class="gift-container" id="gift-box" onclick="openGift()">
+            <div class="gift-box">🎁</div>
+            <p class="tap-text">Tap to open...</p>
+        </div>
+    </section>
+
+    <section class="page" id="page-game">
+        <div class="game-container">
+            <h2 class="game-title">✨ Eitss, Main Game Dulu ✨</h2>
+            <p class="game-instruction">Pilih satu kotak yang berisi angka keberuntungan atau tanggal lahir aku (cowokmu yang lagi minta maaf ini) untuk masuk ke menu utama!</p>
+            <div class="game-options">
+                <div class="game-card" onclick="checkGameChoice(1)">⭐<br><span>14</span></div>
+                <div class="game-card" onclick="checkGameChoice(2)">✨<br><span>25</span></div>
+                <div class="game-card" onclick="checkGameChoice(3)">🔮<br><span>24</span></div>
+            </div>
+            <p id="game-feedback" class="game-feedback"></p>
+
+            <button class="next-btn hidden-element" id="btn-to-menu" onclick="navigateToPage('page2')">Masuk ke Menu Kejutan ✨</button>
+        </div>
+    </section>
+
+    <section class="page" id="page2">
+        <div class="menu-container">
+            <span class="sub-title">a beautiful token of love</span>
+            <h1 class="main-title">Choose Your<br>Surprise ✨</h1>
+            
+            <div class="surprise-grid">
+                <div class="surprise-item" onclick="navigateToPage('page-surat')">
+                    <div class="surprise-icon">💝</div>
+                    <span>Letter</span>
+                </div>
+                <div class="surprise-item" onclick="navigateToPage('page-galeri')">
+                    <div class="surprise-icon">📸</div>
+                    <span>Journey</span>
+                </div>
+                <div class="surprise-item" onclick="navigateToPage('page-video')">
+                    <div class="surprise-icon">🎬</div>
+                    <span>Videos</span>
+                </div>
+            </div>
+            <p class="footer-note" style="margin-top: 40px;">Klik salah satu ikon di atas untuk membuka kejutan</p>
+        </div>
+    </section>
+
+    <section class="page" id="page-surat">
+        <div class="card">
+            <span class="heart-icon">🌸 🌸 🌸</span>
+            <h3>from my heart</h3>
+            <h2 id="typewriter-title"></h2>
+            <p class="letter-text" id="typewriter-text"></p>
+            <span class="signature" id="typewriter-sig"></span>
+            
+            <button class="back-btn" onclick="navigateToPage('page2')">BACK ◀</button>
+        </div>
+    </section>
+
+    <section class="page" id="page-galeri">
+        <h2 class="section-title">Your Beautiful Pictures</h2>
+        <p class="gallery-info-text">💡 Coba klik fotonya dan lihat efek lucunya!</p>
+        
+        <div class="category-buttons">
+            <button class="cat-btn active" onclick="filterGallery('semua', event)">Semua Foto</button>
+            <button class="cat-btn" onclick="filterGallery('lucu', event)">Foto Lucu 😜</button>
+            <button class="cat-btn" onclick="filterGallery('cantik', event)">Foto Cantik ✨</button>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-item lucu" onclick="handlePhotoClick(0, this, event)">
+                <img src="foto 6.jpeg" alt="Foto 1">
+                <span class="photo-caption">waktu muka cemberut</span>
+            </div>
+            <div class="photo-item lucu" onclick="handlePhotoClick(1, this, event)">
+                <img src="foto1.jpeg" alt="Foto 2">
+                <span class="photo-caption">random bangett</span>
+            </div>
+            <div class="photo-item cantik" onclick="handlePhotoClick(2, this, event)">
+                <img src="foto 8.jpeg" alt="Foto 3">
+                <span class="photo-caption">senyum favorit aku</span>
+            </div>
+            <div class="photo-item cantik" onclick="handlePhotoClick(3, this, event)">
+                <img src="foto 4.jpeg" alt="Foto 4">
+                <span class="photo-caption">bidadari ya?</span>
+            </div>
+        </div>
+
+        <button class="back-btn" onclick="navigateToPage('page2')">BACK ◀</button>
+    </section>
+
+    <section class="page" id="page-video">
+        <h2 class="section-title" style="margin-bottom: 5px;">Our Precious Videos</h2>
+        <p class="quote" style="margin-bottom: 20px;">"Kumpulan momen indah kita dalam bentuk video ✨"</p>
+        
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <video controls style="width: 100%; border-radius: 8px;">
+                        <source src="video1.mp4" type="video/mp4">
+                        Browser kamu tidak mendukung pemutar video.
+                    </video>
+                </div>
+                <span class="video-caption-text">🎵 Video Kamu yang Paling Gemes</span>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <video controls style="width: 100%; border-radius: 8px;">
+                        <source src="video2.mp4" type="video/mp4">
+                        Browser kamu tidak mendukung pemutar video.
+                    </video>
+                </div>
+                <span class="video-caption-text">👩‍❤️‍👨 Cantik banget siii</span>
+            </div>
+        </div>
+
+        <button class="back-btn" onclick="navigateToPage('page2')" style="margin-top: 25px;">BACK ◀</button>
+    </section>
+
+    <div id="lightbox-modal" class="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <button class="lightbox-arrow prev-arrow" onclick="changePhoto(-1)">&#10094;</button>
+        <div class="lightbox-content-wrapper">
+            <img id="lightbox-img" src="" alt="Enlarged">
+            <p id="lightbox-caption"></p>
+        </div>
+        <button class="lightbox-arrow next-arrow" onclick="changePhoto(1)">&#10095;</button>
+    </div>
+
+    <div id="leaves-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
