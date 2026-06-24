@@ -1,182 +1,155 @@
-let typewriterStarted = false;
+// Teks Surat Minta Maaf Efek Mengetik Otomatis
+const titleText = "Maafin Aku Ya, Sayang... ❤️";
 
-function navigateToPage(pageId) {
-    const activePage = document.querySelector('.page.active');
-    if (activePage) activePage.classList.remove('active');
+const bodyText = "Hai cantiknya aku. Lewat web kecil ini, aku mau minta maaf yang sebesar-besarnya dari lubuk hatiku yang paling dalam.\n\nMaaf banget ya kalau tadi aku kelamaan ninggalin kamu. Maaf kalau kesibukanku bikin kamu ngerasa kesepian, dicuekin, atau harus nunggu kabar dari aku yang lama banget. Aku tahu itu pasti gak enak banget dan bikin kamu kesel.\n\nSama sekali gak ada niatan aku buat bikin kamu ngerasa gak berharga. Makasih banyak ya udah sesabar itu ngadepin aku. Jangan marah lagi ya manis? I love you so much! 🔒";
 
-    setTimeout(() => {
-        const targetPage = document.getElementById(pageId);
-        if (targetPage) {
-            targetPage.classList.add('active');
-            if (pageId === 'page-surat' && !typewriterStarted) {
-                startTypewriter();
-                typewriterStarted = true;
-            }
-        }
-    }, 50);
+const sigText = "- Dari Cowokmu Yang Sering Bikin Kangen";
+
+let hasTyped = false; 
+let currentPhotoIndex = 0;
+let filteredPhotos = [];
+
+// Fungsi Klik Kado
+function openGift() {
+    const music = document.getElementById('bg-music');
+    music.play().catch(err => console.log("Autoplay sukses berjalan."));
+    startFallingLeaves();
+    navigateToPage('page-game');
 }
 
-document.getElementById('gift-box').addEventListener('click', function() {
-    let yakin = confirm("Hai Cantik! Ada kejutan spesial buat kamu. Buka sekarang?");
-    if (yakin) {
-        const music = document.getElementById('bg-music');
-        music.play().catch(err => console.log("Audio aktif."));
-        startFlowerShower();
-        navigateToPage('page-game'); 
-    } else {
-        alert("Jangan dicancel dong, dibuka dulu yuk! 🥺");
-    }
-});
-
-function checkGameChoice(choiceId) {
-    const cards = document.querySelectorAll('.game-card');
+// Logika Game Tebak Angka
+function checkGameChoice(choice) {
     const feedback = document.getElementById('game-feedback');
     const nextBtn = document.getElementById('btn-to-menu');
+    
+    document.querySelectorAll('.game-card').forEach(card => card.classList.remove('wrong', 'correct'));
 
-    cards.forEach(card => card.classList.remove('wrong', 'correct'));
-
-    if (choiceId === 2) {
-        cards[1].classList.add('correct');
+    if (choice === 2) {
+        document.querySelectorAll('.game-card')[1].classList.add('correct');
+        feedback.innerText = "Ih pinter banget! Bener kok ini tanggal lahir aku mwah 🥰❤️";
         feedback.style.color = "#4bff4b";
-        feedback.innerText = "Yeyyy tepat banget! Kamu emang paling pintar! ❤️";
         nextBtn.classList.remove('hidden-element');
     } else {
-        const index = choiceId === 1 ? 0 : 2;
-        cards[index].classList.add('wrong');
+        event.currentTarget.classList.add('wrong');
+        feedback.innerText = "Yaa salah... Masa tanggal lahir cowok sendiri lupa sih? Coba lagi! 🥺";
         feedback.style.color = "#ff4b4b";
-        const salahTexts = [
-            "Yahh salah! Coba ingat-ingat tanggal jadian kita 😜",
-            "Masa salah sih? Coba pencet kotak yang lain! 🥺",
-            "Bukan yang itu sayang, ayo coba tebak lagi!"
-        ];
-        feedback.innerText = salahTexts[Math.floor(Math.random() * salahTexts.length)];
+        nextBtn.classList.add('hidden-element');
     }
 }
 
-const photoData = [
-    { src: "foto1.jpg.webp", caption: "waktu muka cemberut" },
-    { src: "foto2.jpg.webp", caption: "random bangett" },
-    { src: "foto3.jpg.webp", caption: "senyum favorit aku" },
-    { src: "foto4.jpg.webp", caption: "bidadari ya?" }
-];
+// Fungsi Pindah Halaman & Trigger Mengetik
+function navigateToPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) targetPage.classList.add('active');
 
-let currentPhotoIndex = 0;
-
-function pemicuEmojiGemas() {
-    const lightbox = document.getElementById("lightbox-modal");
-    const daftarEmoji = ['🥰', '💖', '✨', '🐣', '🌸', '🐰', '💘', '🧸', '🌹'];
-    
-    for (let i = 0; i < 15; i++) {
-        const emoji = document.createElement('div');
-        emoji.classList.add('lightbox-emoji');
-        emoji.innerText = daftarEmoji[Math.floor(Math.random() * daftarEmoji.length)];
-        
-        emoji.style.left = '50%';
-        emoji.style.top = '50%';
-        
-        const sudutJauhX = (Math.random() * 300 - 150) + 'px';
-        const sudutJauhY = (Math.random() * 300 - 150) + 'px';
-        const rotasiAcak = (Math.random() * 360) + 'deg';
-        
-        emoji.style.setProperty('--tx', sudutJauhX);
-        emoji.style.setProperty('--ty', sudutJauhY);
-        emoji.style.setProperty('--rot', rotasiAcak);
-        emoji.style.animationDelay = (Math.random() * 0.08) + 's';
-        
-        lightbox.appendChild(emoji);
-        setTimeout(() => { emoji.remove(); }, 1200);
+    if (pageId === 'page-surat' && !hasTyped) {
+        hasTyped = true; 
+        typeWriter(titleText, "typewriter-title", 60, () => {
+            typeWriter(bodyText, "typewriter-text", 45, () => {
+                typeWriter(sigText, "typewriter-sig", 50);
+            });
+        });
     }
 }
 
-function handlePhotoClick(index, element, event) {
-    currentPhotoIndex = index;
-    updateLightboxContent();
-    document.getElementById("lightbox-modal").classList.add("show-lightbox");
-    pemicuEmojiGemas();
-}
-
-function closeLightbox() {
-    document.getElementById("lightbox-modal").classList.remove("show-lightbox");
-}
-
-function changePhoto(direction) {
-    currentPhotoIndex += direction;
-    if (currentPhotoIndex >= photoData.length) currentPhotoIndex = 0;
-    if (currentPhotoIndex < 0) currentPhotoIndex = photoData.length - 1;
+// Logika Efek Ketikan
+function typeWriter(text, elementId, speed, callback) {
+    let i = 0;
+    const element = document.getElementById(elementId);
+    element.innerHTML = "";
     
-    updateLightboxContent();
-    
-    const wrapper = document.querySelector('.lightbox-content-wrapper');
-    wrapper.style.animation = 'none';
-    setTimeout(() => {
-        wrapper.style.animation = 'bounceGemas 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
-    }, 10);
-    
-    pemicuEmojiGemas();
-}
-
-function updateLightboxContent() {
-    document.getElementById("lightbox-img").src = photoData[currentPhotoIndex].src;
-    document.getElementById("lightbox-caption").innerText = photoData[currentPhotoIndex].caption;
-}
-
-function startTypewriter() {
-    const titleText = "You are my wildest dream come true.";
-    const bodyText = "In a world full of ordinary moments, you are the extraordinary one. The way you laugh, the way you care, the way you simply exist — it fills every corner of my world with something I never knew I needed.";
-    const sigText = "— Always yours ♡";
-    let i = 0, j = 0, k = 0;
-
-    function typeTitle() {
-        if (i < titleText.length) {
-            document.getElementById("typewriter-title").innerHTML += titleText.charAt(i);
-            i++; setTimeout(typeTitle, 45);
-        } else { typeBody(); }
-    }
-    function typeBody() {
-        if (j < bodyText.length) {
-            document.getElementById("typewriter-text").innerHTML += bodyText.charAt(j);
-            j++; setTimeout(typeBody, 30);
-        } else { typeSig(); }
-    }
-    function typeSig() {
-        if (k < sigText.length) {
-            document.getElementById("typewriter-sig").innerHTML += sigText.charAt(k);
-            k++; setTimeout(typeSig, 45);
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        } else if (callback) {
+            callback();
         }
     }
-    typeTitle();
+    type();
 }
 
-function startFlowerShower() {
-    const container = document.getElementById('leaves-container');
-    const flowers = ['🌸', '✨', '💖', '🌹'];
-    setInterval(() => {
-        const leaf = document.createElement('div');
-        leaf.classList.add('leaf');
-        leaf.innerText = flowers[Math.floor(Math.random() * flowers.length)];
-        leaf.style.left = Math.random() * 100 + 'vw';
-        leaf.style.animationDuration = Math.random() * 3 + 2.5 + 's';
-        container.appendChild(leaf);
-        setTimeout(() => { leaf.remove(); }, 5000);
-    }, 220);
-}
-
-function filterGallery(kategori, event) {
+// Filter Galeri Foto
+function filterGallery(category, event) {
     document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    event.currentTarget.classList.add('active');
+
     document.querySelectorAll('.photo-item').forEach(item => {
-        if (kategori === 'semua' || item.classList.contains(kategori)) {
-            item.classList.remove('hide');
+        if (category === 'semua' || item.classList.contains(category)) {
+            item.style.display = 'block';
         } else {
-            item.classList.add('hide');
+            item.style.display = 'none';
         }
     });
 }
 
-document.addEventListener('keydown', function(e) {
-    if (document.getElementById("lightbox-modal").classList.contains("show-lightbox")) {
-        if (e.key === "Escape") closeLightbox();
-        if (e.key === "ArrowRight") changePhoto(1);
-        if (e.key === "ArrowLeft") changePhoto(-1);
+// PAS FOTO DIKLIK, KELUAR EFEK LEDAKAN HATI & BINTANG KEMUDIAN POP-UP
+function handlePhotoClick(index, element, event) {
+    const clickX = event.clientX;
+    const clickY = event.clientY;
+
+    const particles = ['🌸', '💖', '✨', '❤️', '💝'];
+    for (let i = 0; i < 15; i++) {
+        const p = document.createElement('div');
+        p.classList.add('click-particle');
+        p.innerText = particles[Math.floor(Math.random() * particles.length)];
+        
+        p.style.left = clickX + 'px';
+        p.style.top = clickY + 'px';
+
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 120 + 60; 
+        p.style.setProperty('--x', Math.cos(angle) * velocity + 'px');
+        p.style.setProperty('--y', Math.sin(angle) * velocity + 'px');
+
+        document.body.appendChild(p);
+        setTimeout(() => { p.remove(); }, 800);
     }
-});
+
+    filteredPhotos = Array.from(document.querySelectorAll('.photo-item')).filter(item => item.style.display !== 'none');
+    currentPhotoIndex = filteredPhotos.indexOf(element);
+    openLightbox(element.querySelector('img').src, element.querySelector('.photo-caption').innerText);
+}
+
+function openLightbox(src, caption) {
+    document.getElementById('lightbox-modal').style.display = 'flex';
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-caption').innerText = caption;
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox-modal').style.display = 'none';
+}
+
+function changePhoto(direction) {
+    currentPhotoIndex += direction;
+    if (currentPhotoIndex >= filteredPhotos.length) currentPhotoIndex = 0;
+    if (currentPhotoIndex < 0) currentPhotoIndex = filteredPhotos.length - 1;
+
+    const targetImg = filteredPhotos[currentPhotoIndex].querySelector('img').src;
+    const targetCaption = filteredPhotos[currentPhotoIndex].querySelector('.photo-caption').innerText;
+    
+    document.getElementById('lightbox-img').src = targetImg;
+    document.getElementById('lightbox-caption').innerText = targetCaption;
+}
+
+// Efek Kelopak Sakura Gugur
+function startFallingLeaves() {
+    const container = document.getElementById('leaves-container');
+    const items = ['🌸', '✨', '🌸', '💖'];
+
+    setInterval(() => {
+        const leaf = document.createElement('div');
+        leaf.classList.add('leaf');
+        leaf.innerText = items[Math.floor(Math.random() * items.length)];
+
+        leaf.style.left = Math.random() * 100 + 'vw';
+        leaf.style.animationDuration = Math.random() * 3 + 3 + 's';
+        leaf.style.opacity = Math.random();
+
+        container.appendChild(leaf);
+        setTimeout(() => { leaf.remove(); }, 6000);
+    }, 400);
+}

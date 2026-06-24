@@ -11,7 +11,7 @@
     <audio id="bg-music" src="lagu.mp3" loop></audio>
 
     <section class="page active" id="page1">
-        <div class="gift-container" id="gift-box">
+        <div class="gift-container" id="gift-box" onclick="openGift()">
             <div class="gift-box">🎁</div>
             <p class="tap-text">Tap to open...</p>
         </div>
@@ -20,10 +20,10 @@
     <section class="page" id="page-game">
         <div class="game-container">
             <h2 class="game-title">✨ Eitss, Main Game Dulu ✨</h2>
-            <p class="game-instruction">Pilih satu kotak yang berisi angka keberuntungan / tanggal jadian kita untuk masuk ke menu utama!</p>
+            <p class="game-instruction">Pilih satu kotak yang berisi angka keberuntungan atau tanggal lahir aku (cowokmu yang lagi minta maaf ini) untuk masuk ke menu utama!</p>
             <div class="game-options">
                 <div class="game-card" onclick="checkGameChoice(1)">⭐<br><span>14</span></div>
-                <div class="game-card" onclick="checkGameChoice(2)">✨<br><span>01</span></div>
+                <div class="game-card" onclick="checkGameChoice(2)">✨<br><span>25</span></div>
                 <div class="game-card" onclick="checkGameChoice(3)">🔮<br><span>24</span></div>
             </div>
             <p id="game-feedback" class="game-feedback"></p>
@@ -79,19 +79,19 @@
 
         <div class="gallery-grid">
             <div class="photo-item lucu" onclick="handlePhotoClick(0, this, event)">
-                <img src="foto1.jpg.webp" alt="Foto 1">
+                <img src="foto 6.jpeg" alt="Foto 1">
                 <span class="photo-caption">waktu muka cemberut</span>
             </div>
             <div class="photo-item lucu" onclick="handlePhotoClick(1, this, event)">
-                <img src="foto2.jpg.webp" alt="Foto 2">
+                <img src="foto1.jpeg" alt="Foto 2">
                 <span class="photo-caption">random bangett</span>
             </div>
             <div class="photo-item cantik" onclick="handlePhotoClick(2, this, event)">
-                <img src="foto3.jpg.webp" alt="Foto 3">
+                <img src="foto 8.jpeg" alt="Foto 3">
                 <span class="photo-caption">senyum favorit aku</span>
             </div>
             <div class="photo-item cantik" onclick="handlePhotoClick(3, this, event)">
-                <img src="foto4.jpg.webp" alt="Foto 4">
+                <img src="foto 4.jpeg" alt="Foto 4">
                 <span class="photo-caption">bidadari ya?</span>
             </div>
         </div>
@@ -106,15 +106,21 @@
         <div class="video-grid">
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/SshMvY_6uB8" title="Video Kenangan 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <video controls style="width: 100%; border-radius: 8px;">
+                        <source src="video1.mp4" type="video/mp4">
+                        Browser kamu tidak mendukung pemutar video.
+                    </video>
                 </div>
-                <span class="video-caption-text">🎵 Lagu Favorit Kita</span>
+                <span class="video-caption-text">🎵 Video Kamu yang Paling Gemes</span>
             </div>
             <div class="video-card">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/SshMvY_6uB8" title="Video Kenangan 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <video controls style="width: 100%; border-radius: 8px;">
+                        <source src="video2.mp4" type="video/mp4">
+                        Browser kamu tidak mendukung pemutar video.
+                    </video>
                 </div>
-                <span class="video-caption-text">👩‍❤️‍👨 Waktu Jalan Bareng</span>
+                <span class="video-caption-text">👩‍❤️‍👨 Cantik banget siii</span>
             </div>
         </div>
 

@@ -1,61 +1,47 @@
-/* Base Style Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Georgia', serif;
 }
 
 body {
-    background-color: #12040d;
-    color: #fff0f5;
-    overflow: hidden;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Membaca file foto1.jpg.webp sebagai background utama dengan efek blur */
-    background-image: linear-gradient(rgba(18, 4, 13, 0.92), rgba(18, 4, 13, 0.92)), url('foto1.jpg.webp');
+    /* BACKGROUND MENGGUNAKAN FOTO DENGAN LAPISAN GELAP TRANSPARAN BIAR TEKS JELAS */
+    background: linear-gradient(rgba(18, 4, 13, 0.85), rgba(35, 8, 25, 0.85)), url('bg.jpeg');
     background-size: cover;
     background-position: center;
-    filter: blur(10px);
-    z-index: -1;
-    transform: scale(1.05);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #fff0f5;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Transisi Halaman Smooth */
+/* Sistem Transisi Antar Halaman */
 .page {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
+    max-width: 500px;
+    min-height: 100vh;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 24px;
+    position: absolute;
+    top: 0;
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.93) translateY(10px);
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
-                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
-                visibility 0.6s;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .page.active {
+    position: relative;
     opacity: 1;
     visibility: visible;
-    transform: scale(1) translateY(0);
 }
 
 .hidden-element {
@@ -64,274 +50,208 @@ body::before {
     transform: translateY(15px);
 }
 
-/* Kado Pembuka */
-.gift-container { cursor: pointer; transition: transform 0.3s ease; }
-.gift-container:hover { transform: scale(1.1); }
-.gift-box { font-size: 100px; animation: bounceGift 2s infinite ease-in-out; }
-.tap-text { margin-top: 15px; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.6; }
+/* Gaya Kado */
+.gift-container { cursor: pointer; }
+.gift-box { font-size: 90px; animation: pulse 2s infinite; }
+.tap-text { margin-top: 10px; font-size: 12px; letter-spacing: 2px; opacity: 0.8; }
 
-@keyframes bounceGift {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-20px); }
-    60% { transform: translateY(-10px); }
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
 }
 
-/* Minigame */
+/* Minigame Tebak Angka */
 .game-container {
-    max-width: 450px;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.06);
     padding: 30px 20px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    width: 100%;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
-.game-title { font-size: 19px; color: #ffb7c5; margin-bottom: 10px; font-weight: 600; }
-.game-instruction { font-size: 13px; opacity: 0.8; line-height: 1.5; margin-bottom: 20px; }
+.game-title { font-size: 20px; margin-bottom: 10px; color: #ffb7c5; font-style: italic; }
+.game-instruction { font-size: 13px; opacity: 0.7; margin-bottom: 25px; line-height: 1.6; }
 .game-options { display: flex; gap: 12px; justify-content: center; }
 .game-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 18px;
-    border-radius: 16px;
-    cursor: pointer;
-    font-size: 22px;
-    width: 80px;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.game-card span { display: block; font-size: 13px; margin-top: 6px; font-weight: bold; }
-.game-card:hover { transform: translateY(-4px); border-color: #ffb7c5; background: rgba(255, 255, 255, 0.1); }
-.game-card.wrong { background: rgba(255, 75, 75, 0.2); border-color: #ff4b4b; animation: shake 0.4s ease; }
-.game-card.correct { background: rgba(75, 255, 75, 0.2); border-color: #4bff4b; transform: scale(1.05); }
-.game-feedback { font-size: 13.5px; margin-top: 15px; min-height: 20px; color: #ffb7c5; }
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
-}
-
-.next-btn {
-    background: linear-gradient(135deg, #ffb7c5, #ffa6b9);
-    color: #12040d;
-    border: none;
-    padding: 12px 24px;
-    font-size: 13px;
-    font-weight: bold;
-    border-radius: 30px;
-    cursor: pointer;
-    margin-top: 15px;
-    box-shadow: 0 4px 15px rgba(255, 183, 197, 0.3);
-    transition: all 0.3s ease;
-}
-.next-btn:hover { background: #fff; transform: translateY(-2px); }
-
-/* Menu Utama */
-.sub-title { font-style: italic; opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; font-size: 11px; }
-.main-title {
-    font-size: 3.2rem;
-    margin: 20px 0;
-    font-weight: 300;
-    line-height: 1.2;
-    letter-spacing: -1px;
-    background: linear-gradient(45deg, #fff, #ffb7c5);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.surprise-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 480px; width: 100%; }
-.surprise-item {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 25px 10px;
+    width: 70px;
+    height: 80px;
+    border-radius: 12px;
     cursor: pointer;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.surprise-item:hover { transform: translateY(-6px); border-color: rgba(255, 183, 197, 0.5); background: rgba(255, 255, 255, 0.08); }
-.surprise-icon { font-size: 38px; margin-bottom: 10px; }
-.surprise-item span { font-size: 13px; font-weight: 500; }
-
-/* Galeri Grid Foto */
-.section-title { font-size: 24px; margin-bottom: 10px; font-weight: 300; }
-.gallery-info-text { font-size: 12px; opacity: 0.6; margin-bottom: 15px; font-style: italic; color: #ffb7c5; }
-.category-buttons { display: flex; gap: 8px; margin-bottom: 20px; }
-.cat-btn {
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff0f5;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 6px 16px;
-    font-size: 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.cat-btn.active, .cat-btn:hover { background: #ffb7c5; color: #12040d; font-weight: bold; }
-
-.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 440px; width: 100%; max-height: 44vh; overflow-y: auto; padding: 5px; }
-.gallery-grid::-webkit-scrollbar { width: 0px; }
-.photo-item {
-    background: rgba(255, 255, 255, 0.04);
-    padding: 10px;
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-.photo-item:hover { transform: scale(1.03); border-color: rgba(255, 183, 197, 0.3); }
-.photo-item img { width: 100%; height: 130px; object-fit: cover; border-radius: 12px; }
-.photo-caption { display: block; font-size: 12px; margin-top: 8px; opacity: 0.7; }
-.photo-item.hide { display: none; }
-
-/* =======================================================
-   PERBAIKAN LIGHTBOX (Warna Background & Ukuran Layar HP)
-   ======================================================= */
-.lightbox {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(41, 15, 27, 0.97); /* Warna pink gelap romantis */
-    z-index: 10000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s;
-}
-.lightbox.show-lightbox { opacity: 1; visibility: visible; }
-
-/* Wadah Konten Utama - Menjaga Jarak Aman di Layar HP */
-.lightbox-content-wrapper {
+    font-size: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 85%; /* Menghindari gambar menempel ke tepi kanan-kiri HP */
-    max-height: 75vh;
+    transition: all 0.3s ease;
 }
+.game-card span { font-size: 14px; font-weight: bold; margin-top: 5px; }
+.game-card.wrong { background: rgba(255, 75, 75, 0.2); border-color: #ff4b4b; }
+.game-card.correct { background: rgba(75, 255, 75, 0.2); border-color: #4bff4b; }
+.game-feedback { font-size: 13px; margin-top: 15px; min-height: 20px; color: #ffb7c5; }
 
-/* Efek Foto Memantul Manis Pas Terbuka */
-.lightbox.show-lightbox .lightbox-content-wrapper {
-    animation: bounceGemas 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@keyframes bounceGemas {
-    0% { transform: scale(0.4) rotate(-6deg); opacity: 0; }
-    60% { transform: scale(1.04) rotate(2deg); }
-    80% { transform: scale(0.99) rotate(-0.5deg); }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-
-/* RESPONSIVE: Mengontrol Ukuran Gambar agar Sempurna di HP */
-#lightbox-img {
-    max-width: 100%;
-    max-height: 55vh; /* Batasi tinggi gambar maksimal 55% layar HP biar muat tombol */
-    object-fit: contain; /* Menjaga aspek rasio foto asli agar tidak gepeng */
-    border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Animasi Tulisan Caption */
-#lightbox-caption {
-    margin-top: 18px;
-    font-size: 14px;
+.next-btn, .back-btn {
+    background: transparent;
     color: #ffb7c5;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 0 2px 10px rgba(255, 183, 197, 0.4);
-    animation: textGoyang 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes textGoyang {
-    0% { transform: translateY(0) scale(1); color: #ffb7c5; }
-    100% { transform: translateY(-4px) scale(1.03); color: #fff; }
-}
-
-/* Tombol Silang (X) untuk Kembali - Dioptimalkan untuk Jari HP */
-.close-lightbox {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    font-size: 44px; /* Diperbesar agar sangat mudah di-tap jempol */
+    border: 1px solid #ffb7c5;
+    padding: 10px 20px;
+    font-size: 12px;
+    border-radius: 4px;
     cursor: pointer;
-    opacity: 0.8;
-    color: white;
-    z-index: 10050; /* Memastikan posisinya berada paling atas */
-    padding: 10px;  /* Memperlebar area sentuh sensitivitas jari */
-    transition: color 0.3s, transform 0.3s;
+    margin-top: 15px;
+    transition: all 0.3s ease;
 }
-.close-lightbox:hover { opacity: 1; color: #ffb7c5; transform: scale(1.1); }
+.next-btn:hover, .back-btn:hover { background: #ffb7c5; color: #230819; }
 
-/* Tombol Navigasi Panah Kanan & Kiri */
-.lightbox-arrow {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.08);
-    color: white;
-    border: none;
-    font-size: 18px;
-    padding: 12px 15px;
-    border-radius: 50%;
+/* Menu Utama */
+.menu-container { width: 100%; }
+.sub-title { font-size: 11px; font-style: italic; letter-spacing: 2px; opacity: 0.6; text-transform: uppercase; }
+.main-title { font-size: 2.3rem; margin: 15px 0 30px 0; font-weight: 400; line-height: 1.2; }
+.surprise-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; }
+.surprise-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 10px;
+    border-radius: 12px;
     cursor: pointer;
-    z-index: 10030;
+    transition: all 0.3s ease;
     backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    transition: background 0.3s, color 0.3s;
 }
-.lightbox-arrow:hover { background: #ffb7c5; color: #12040d; }
-.prev-arrow { left: 15px; }
-.next-arrow { right: 15px; }
+.surprise-item:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-5px); }
+.surprise-icon { font-size: 30px; margin-bottom: 8px; }
+.surprise-item span { font-size: 12px; opacity: 0.8; }
 
-/* Efek Semburan Kelompok Emoji */
-.lightbox-emoji {
-    position: absolute;
-    font-size: 35px;
+/* Halaman Surat */
+.card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 30px 20px;
+    border-radius: 16px;
+    width: 100%;
+    text-align: justify;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.heart-icon { display: block; text-align: center; font-size: 14px; margin-bottom: 10px; }
+.card h3 { text-align: center; font-size: 12px; font-weight: normal; opacity: 0.5; font-style: italic; margin-bottom: 15px; }
+.card h2 { text-align: center; font-size: 20px; color: #ffb7c5; margin-bottom: 20px; font-weight: normal; }
+.letter-text { font-size: 14px; line-height: 1.7; opacity: 0.85; white-space: pre-line; }
+.signature { display: block; text-align: right; font-style: italic; font-size: 13px; margin-top: 25px; color: #ffb7c5; }
+.card .back-btn { display: block; margin: 30px auto 0 auto; }
+
+/* Galeri Foto */
+.section-title { font-size: 22px; font-weight: normal; margin-bottom: 5px; color: #ffb7c5; }
+.gallery-info-text, .quote { font-size: 12px; opacity: 0.6; font-style: italic; margin-bottom: 20px; }
+.category-buttons { display: flex; gap: 8px; margin-bottom: 25px; }
+.cat-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.cat-btn.active { background: #ffb7c5; color: #230819; border-color: #ffb7c5; }
+.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; }
+.photo-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(5px);
+}
+.photo-item:hover { transform: scale(1.05); }
+.photo-item img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; }
+.photo-caption { display: block; font-size: 11px; margin-top: 6px; opacity: 0.7; }
+
+/* Video */
+.video-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+.video-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px;
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+}
+.video-wrapper { 
+    position: relative; 
+    width: 100%;
+    border-radius: 8px; 
+    overflow: hidden; 
+}
+.video-caption-text { display: block; font-size: 12px; margin-top: 8px; opacity: 0.8; }
+
+/* Efek Pop-up Foto Keluar (Lightbox) */
+.lightbox {
+    position: fixed; 
+    z-index: 999; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(15, 3, 11, 0.93); 
+    display: none; 
+    align-items: center; 
+    justify-content: center;
+    backdrop-filter: blur(8px);
+}
+.lightbox-content-wrapper { 
+    max-width: 85%; 
+    text-align: center;
+    animation: zoomOutEffect 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.lightbox-content-wrapper img { 
+    max-width: 100%; 
+    max-height: 65vh; 
+    border-radius: 12px; 
+    border: 2px solid rgba(255, 183, 197, 0.4);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8); 
+}
+#lightbox-caption { 
+    color: #ffb7c5; 
+    margin-top: 15px; 
+    font-size: 14px; 
+    font-style: italic;
+    letter-spacing: 1px;
+}
+.close-lightbox { position: absolute; top: 25px; right: 30px; color: #ffb7c5; font-size: 45px; cursor: pointer; transition: 0.2s; }
+.close-lightbox:hover { color: #fff; transform: scale(1.1); }
+.lightbox-arrow {
+    background: transparent; color: rgba(255, 183, 197, 0.7); border: none; font-size: 35px; padding: 20px; cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); transition: 0.2s;
+}
+.lightbox-arrow:hover { color: #fff; transform: translateY(-50%) scale(1.2); }
+.prev-arrow { left: 10px; } .next-arrow { right: 10px; }
+
+@keyframes zoomOutEffect {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Ledakan Partikel Cinta Saat Foto Diklik */
+.click-particle {
+    position: fixed;
     pointer-events: none;
-    z-index: 10005;
-    animation: emojiMuncrat 1.2s cubic-bezier(0.12, 0.89, 0.32, 0.94) forwards;
+    z-index: 1000;
+    font-size: 20px;
+    animation: explodeParticles 0.8s ease-out forwards;
+}
+@keyframes explodeParticles {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0); opacity: 0; }
 }
 
-@keyframes emojiMuncrat {
-    0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
-    40% { opacity: 1; }
-    100% { transform: translate(var(--tx), var(--ty)) scale(1.4) rotate(var(--rot)); opacity: 0; }
-}
-
-/* Elemen Pendukung Surat & Video */
-.card { background: rgba(255, 255, 255, 0.04); padding: 35px 25px; border-radius: 24px; max-width: 450px; width: 100%; border: 1px solid rgba(255, 255, 255, 0.1); }
-.letter-text { font-size: 14px; line-height: 1.7; opacity: 0.85; margin-bottom: 15px; text-align: justify; }
-.signature { font-style: italic; font-weight: bold; color: #ffb7c5; }
-.back-btn { background: transparent; color: #ffb7c5; border: 2px solid rgba(255, 183, 197, 0.4); padding: 8px 22px; font-size: 12px; font-weight: bold; border-radius: 20px; cursor: pointer; margin-top: 20px; letter-spacing: 1px; }
-.back-btn:hover { background: #ffb7c5; color: #12040d; }
-
-.video-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 440px; width: 100%; max-height: 50vh; overflow-y: auto; }
-.video-card { background: rgba(255, 255, 255, 0.04); padding: 10px; border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.1); }
-.video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; }
-.video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.video-caption-text { display: block; font-size: 12.5px; margin-top: 8px; color: #ffb7c5; }
-
-#leaves-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
-.leaf { position: absolute; color: #ffb7c5; font-size: 16px; animation: fall linear infinite; }
-@keyframes fall {
+/* Kelopak Sakura */
+#leaves-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99; }
+.leaf { position: absolute; color: #ffb7c5; font-size: 14px; animation: drift linear infinite; }
+@keyframes drift {
     0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
     100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
-.footer-note { font-size: 11px; opacity: 0.4; }
-
-/* Media Query Khusus Layar Kecil / HP Landscape */
-@media (max-height: 650px) {
-    .main-title { font-size: 2.2rem; margin-bottom: 15px; }
-    .photo-item img { height: 100px; }
-    .game-card { padding: 12px; width: 70px; font-size: 18px; }
-    #lightbox-img { max-height: 45vh; }
-    .close-lightbox { top: 15px; right: 15px; font-size: 38px; }
-}
+.footer-note { font-size: 11px; opacity: 0.4; text-align: center; }
