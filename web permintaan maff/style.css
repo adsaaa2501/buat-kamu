@@ -1,0 +1,382 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #030305;
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Foto Dia + Overlay Redup */
+.photo-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('foto.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px) brightness(0.35);
+    z-index: 0;
+    transform: scale(1.05);
+}
+
+.app-container {
+    width: 100%;
+    max-width: 430px;
+    background: rgba(10, 10, 16, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    min-height: 100vh;
+    padding: 25px 18px 40px 18px;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Falling Flowers Particle */
+.flower-particle {
+    position: fixed;
+    top: -10%;
+    pointer-events: none;
+    z-index: 1000;
+    animation: fallAndRotate linear infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes fallAndRotate {
+    0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { transform: translateY(105vh) rotate(360deg) scale(1.1); opacity: 0; }
+}
+
+/* Stage Screen System */
+.stage-screen {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 85vh;
+}
+
+.stage-screen.active {
+    display: flex;
+}
+
+/* Stage 1: Game Tangkap Hati */
+.game-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+    color: #f472b6;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.game-subtitle {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.game-area {
+    width: 100%;
+    height: 320px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.floating-heart-target {
+    font-size: 45px;
+    position: absolute;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.8));
+}
+
+/* Stage 2: Gift Box */
+.gift-wrapper {
+    cursor: pointer;
+}
+
+.gift-box-icon {
+    font-size: 85px;
+    filter: drop-shadow(0 0 25px rgba(244, 114, 182, 0.6));
+    animation: floatGlow 3s ease-in-out infinite;
+}
+
+.tap-hint {
+    margin-top: 25px;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(244, 114, 182, 0.4);
+}
+
+@keyframes floatGlow {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-14px) scale(1.05); }
+}
+
+/* Stage 3: Multi Slide */
+#mainStage {
+    justify-content: flex-start;
+}
+
+.sub-header {
+    font-family: 'Alex Brush', cursive;
+    color: #f472b6;
+    font-size: 2.2rem;
+    text-align: center;
+    text-shadow: 0 0 12px rgba(244, 114, 182, 0.6);
+}
+
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+}
+
+.section-label {
+    font-family: 'Alex Brush', cursive;
+    color: #f472b6;
+    font-size: 1.8rem;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(244, 114, 182, 0.5);
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-bottom: 18px;
+    font-size: 1.3rem;
+}
+
+.audio-card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.play-btn {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.song-title { font-size: 0.88rem; font-weight: 600; color: #f8fafc; }
+.song-artist { font-size: 0.75rem; color: #94a3b8; }
+
+.slides-wrapper {
+    width: 100%;
+    min-height: 400px;
+    position: relative;
+}
+
+.slide-item {
+    display: none;
+    animation: fadeInSlide 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.slide-item.active {
+    display: block;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.letter-card {
+    background: rgba(0, 0, 0, 0.4);
+    border-left: 3px solid #ec4899;
+    border-radius: 0 16px 16px 0;
+    padding: 20px;
+    min-height: 180px;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: #e2e8f0;
+    backdrop-filter: blur(8px);
+}
+
+.reasons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.reason-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 15px 10px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.reason-card h4 { font-size: 0.85rem; margin-bottom: 4px; }
+.reason-card p { font-size: 0.7rem; color: #94a3b8; }
+
+.garden-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 18px 12px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.garden-hint { font-size: 0.72rem; color: #f472b6; margin-bottom: 10px; }
+.flowers-row { display: flex; justify-content: space-around; font-size: 28px; }
+.flower-item { cursor: pointer; }
+
+.promise-popup {
+    margin-top: 14px;
+    padding: 10px;
+    background: rgba(236, 72, 153, 0.2);
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    border-radius: 10px;
+    font-size: 0.8rem;
+    color: #f472b6;
+    display: none;
+}
+
+.media-container { display: flex; flex-direction: column; gap: 15px; }
+.media-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #000;
+}
+.media-card img, .media-card video { width: 100%; display: block; }
+.media-badge {
+    position: absolute; bottom: 10px; left: 10px;
+    background: rgba(0,0,0,0.7); padding: 4px 12px;
+    border-radius: 15px; font-size: 0.7rem;
+}
+
+/* Slide 4 Decision Box */
+.forgive-decision-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+    min-height: 100px;
+    position: relative;
+}
+
+.forgive-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-yes {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+}
+
+.btn-no {
+    background: rgba(255, 255, 255, 0.15);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.lock-hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #f472b6;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+.forgive-message-box {
+    margin-top: 20px;
+    padding: 22px 18px;
+    background: rgba(236, 72, 153, 0.2);
+    border: 1px solid rgba(236, 72, 153, 0.35);
+    border-radius: 18px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 1.7;
+    backdrop-filter: blur(10px);
+}
+
+/* Nav Controls */
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.nav-btn:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.slide-indicator {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.footer-note { text-align: center; font-size: 0.75rem; color: #94a3b8; margin-top: 15px; }

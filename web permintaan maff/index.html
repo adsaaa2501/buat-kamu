@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Maafin Aku Ya Sayang</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="photo-bg"></div>
+
+    <audio id="bgm" loop preload="auto">
+        <source src="lagu.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="app-container">
+
+        <div class="stage-screen active" id="gameStage">
+            <h2 class="game-title">Mini Game dulu! 🎮</h2>
+            <p class="game-subtitle">Tangkap 3 Hati Terbang buat Buka Kadonya! <br><b id="scoreText">Skor: 0 / 3</b></p>
+            <div class="game-area" id="gameArea">
+                <div class="floating-heart-target" id="heartTarget">💖</div>
+            </div>
+        </div>
+
+        <div class="stage-screen" id="giftStage">
+            <div class="gift-wrapper" id="giftWrapper">
+                <div class="gift-box-icon">🎁</div>
+            </div>
+            <div class="tap-hint">
+                <span>✨</span> Tap Kadonya! <span>✨</span>
+            </div>
+        </div>
+
+        <div class="stage-screen" id="mainStage">
+
+            <div class="audio-card">
+                <button class="play-btn" id="playBtn">▶</button>
+                <div>
+                    <div class="song-title">Bunga Maaf</div>
+                    <div class="song-artist">Playing for you 💖</div>
+                </div>
+            </div>
+
+            <div class="slides-wrapper">
+
+                <div class="slide-item active" id="slide1">
+                    <div class="sub-header">a sorry letter, straight from my chest</div>
+                    <h1 class="main-title">Maafin Aku Ya,<br>Sayangku Cintakuu.</h1>
+                    
+                    <div class="letter-card">
+                        <p id="typewriterText"></p>
+                    </div>
+                </div>
+
+                <div class="slide-item" id="slide2">
+                    <div class="section-label">things I genuinely regret</div>
+                    <div class="section-title">Why I'm Sorry</div>
+
+                    <div class="reasons-grid">
+                        <div class="reason-card">
+                            <div class="reason-icon">🌹</div>
+                            <h4>I Was Careless</h4>
+                            <p>I'm sorry if I accidentally hurt you with what I said earlier.</p>
+                        </div>
+                        <div class="reason-card">
+                            <div class="reason-icon">💫</div>
+                            <h4>I Wasn't Present</h4>
+                            <p>You deserved my full attention and love.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-label">things I promise to do better</div>
+                    <div class="section-title">Garden of Promises</div>
+
+                    <div class="garden-card">
+                        <div class="garden-hint">✨ Klik bunga untuk lihat janji aku ✨</div>
+                        <div class="flowers-row">
+                            <span class="flower-item" data-promise="Aku janji bakal selalu dengerin apa kata kamuu. 🌸">🌸</span>
+                            <span class="flower-item" data-promise="Aku janji bakal selalu jaga perasaan manis kamu. 🌺">🌺</span>
+                            <span class="flower-item" data-promise="Aku janji bakal belajar lebih peka setiap hari. 🌻">🌻</span>
+                        </div>
+                        <div class="promise-popup" id="promisePopup"></div>
+                    </div>
+                </div>
+
+                <div class="slide-item" id="slide3">
+                    <div class="section-label">why you still matter, always</div>
+                    <div class="section-title">You're Still Everything</div>
+
+                    <div class="media-container">
+                        <div class="media-card">
+                            <img src="foto.jpg" alt="Foto Kenangan">
+                            <div class="media-badge">📸 Favorite Picture</div>
+                        </div>
+
+                        <div class="media-card">
+                            <video controls playsinline poster="foto.jpg">
+                                <source src="video.mp4" type="video/mp4">
+                            </video>
+                            <div class="media-badge">🎬 Vidio bidadari</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-item" id="slide4">
+                    <div class="section-label">no excuses, just love</div>
+                    <div class="section-title">Mau Maafin Aku Nggak? 🥺</div>
+
+                    <div class="forgive-decision-area">
+                        <button class="forgive-btn btn-yes" id="btnYes">Mau Banget! ❤️</button>
+                        <button class="forgive-btn btn-no" id="btnNo">Engga! 😜</button>
+                    </div>
+
+                    <p class="lock-hint" id="lockHint">*(Pilih dulu tombolnya buat lanjut ya sayang~)*</p>
+                </div>
+
+                <div class="slide-item" id="slide5">
+                    <div class="section-label">thank you my love</div>
+                    <div class="section-title">Makasih Sayangku! 🎉💖</div>
+
+                    <div class="forgive-message-box">
+                        Makasih banyak udah maafin aku ya sayangku! 🥰<br><br>
+                        Aku janji bakal buktiin semua ucapan aku, lebih peka lagi, dan selalu jaga perasaan kamu baik-baik. I love you so much! ✨
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="nav-controls">
+                <button class="nav-btn" id="prevBtn" disabled>❮ Prev</button>
+                <div class="slide-indicator" id="slideIndicator">1 / 5</div>
+                <button class="nav-btn" id="nextBtn">Next ❯</button>
+            </div>
+
+            <div class="footer-note">
+                Made with love, guilt, and a lot of courage 💖
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
